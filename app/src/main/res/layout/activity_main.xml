@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/preResult"
+        android:id="@+id/result"
         android:layout_width="match_parent"
         android:layout_height="70pt"
         android:gravity="center|right"
@@ -16,7 +16,7 @@
         android:text="" />
 
     <TextView
-        android:id="@+id/result"
+        android:id="@+id/preResult"
         android:layout_width="match_parent"
         android:layout_height="20pt"
         android:gravity="center|right"
