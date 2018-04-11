@@ -15,11 +15,28 @@
         android:textSize="50sp"
         android:text="" />
 
+    <!--HorizontalScrollView>
+        android:layout_width="match_parent"
+        android:layout_height="20pt"
+        android:scrollbars="none">
+            <TextView
+                android:id="@+id/preResult"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center|right"
+                android:maxHeight="20pt"
+                android:singleLine="true"
+                android:text=""
+                android:textSize="20sp"/>
+    </HorizontalScrollView-->
+
     <TextView
         android:id="@+id/preResult"
         android:layout_width="match_parent"
         android:layout_height="20pt"
         android:gravity="center|right"
+        android:maxHeight="20pt"
+        android:singleLine="true"
         android:textSize="20sp"
         android:text="" />
 
@@ -44,6 +61,26 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button_bracketLeft"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="onClick"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:background="@drawable/custom_button"
+                    android:text="@string/bracketLeft" />
+
+                <Button
+                    android:id="@+id/button_bracketRight"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="onClick"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:background="@drawable/custom_button"
+                    android:text="@string/bracketRight" />
 
                 <Button
                     android:id="@+id/button_backspace"

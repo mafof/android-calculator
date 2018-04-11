@@ -16,8 +16,10 @@
     <string name="divide">/</string>
     <string name="result">=</string>
     <string name="plusMinus">+/-</string>
-    <string name="comma">,</string>
+    <string name="comma">.</string>
     <string name="backspace">←</string>
     <string name="clear">C</string>
+    <string name="bracketLeft">(</string>
+    <string name="bracketRight">)</string>
 
 </resources>
