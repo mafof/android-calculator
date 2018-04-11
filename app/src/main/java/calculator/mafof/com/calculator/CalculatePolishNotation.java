@@ -44,6 +44,7 @@ public class CalculatePolishNotation extends HandlerGUI {
             }
         }
         MyLog.d(stackEquation.toString());
+        drawPreResult(stackEquation);
     }
 
     /**
