@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.button_bracketRight: calc.add(")"); break;
             case R.id.button_plusMinus: MyLog.d("click button plusMinus"); break;
             case R.id.button_result:    MyLog.d("click button result"); break;
-            case R.id.button_clear:     MyLog.d("click button clear"); break;
-            case R.id.button_backspace: MyLog.d("click button backspace"); break;
+            case R.id.button_clear:        calc.clear(); break;
+            case R.id.button_backspace:    calc.backspace(); break;
         }
     }
 }

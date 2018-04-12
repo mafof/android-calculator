@@ -27,6 +27,29 @@ public class CalculatePolishNotation extends HandlerGUI {
     }
 
     /**
+     * Метод удаляющий в элементе 1 символ
+     */
+    public void backspace() {
+        String _element = stackEquation.get(stackEquation.size()-1);
+        MyLog.d(_element.length());
+        if(_element.length() > 1) {
+            _element = _element.substring(0, _element.length()-1);
+            stackEquation.set(stackEquation.size()-1, _element);
+        } else {
+            stackEquation.remove(stackEquation.size()-1);
+        }
+        drawPreResult(stackEquation);
+    }
+
+    /**
+     * Метод очищающий уравнение
+     */
+    public void clear() {
+        stackEquation.clear();
+        drawPreResult(stackEquation);
+    }
+
+    /**
      * Проверка входящего символа
      * @param number = входящий символ
      */
