@@ -1,14 +1,21 @@
 package calculator.mafof.com.calculator;
 
 import android.widget.TextView;
+
 import java.util.ArrayList;
 
-public class CalculatePolishNotation extends HandlerGUI {
-    private ArrayList<String> stackEquation; // Стек примера
+import calculator.mafof.com.calculator.polishwrite.Calc;
 
-    CalculatePolishNotation(TextView preResult, TextView result) {
-        super(preResult, result);
+public class GUI extends Calc {
+    private TextView preResult;
+    private TextView result;
+    private StringBuilder preResultText;
+    private ArrayList<String> stackEquation;
+
+    GUI(TextView preResult, TextView result) {
         stackEquation = new ArrayList<>();
+        this.preResult = preResult;
+        this.result = result;
     }
 
     /**
@@ -22,7 +29,6 @@ public class CalculatePolishNotation extends HandlerGUI {
         } else {
             checkNumber(inputData);
         }
-        //MyLog.d(stackEquation.toString());
         drawPreResult(stackEquation);
     }
 
@@ -107,5 +113,13 @@ public class CalculatePolishNotation extends HandlerGUI {
                 return true;
         }
         return false;
+    }
+
+    private void drawPreResult(ArrayList<String> stackEquation) {
+        preResultText = new StringBuilder();
+        for(String el: stackEquation)
+            preResultText.append(el);
+        preResult.setText(preResultText);
+        calculate(stackEquation);
     }
 }

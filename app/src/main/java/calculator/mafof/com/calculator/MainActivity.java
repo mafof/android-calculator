@@ -7,13 +7,13 @@ import android.view.View;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-    private CalculatePolishNotation calc;
+    private GUI calc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        calc = new CalculatePolishNotation((TextView) findViewById(R.id.preResult),(TextView) findViewById(R.id.result));
+        calc = new GUI((TextView) findViewById(R.id.preResult), (TextView) findViewById(R.id.result));
     }
 
     public void onClick(View view) {
