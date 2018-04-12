@@ -5,9 +5,6 @@ import java.util.ArrayList;
 
 public class CalculatePolishNotation extends HandlerGUI {
     private ArrayList<String> stackEquation; // Стек примера
-    private boolean isComma = false; // Поставлена ли запятая
-    private boolean isMathOperator = true; // Запоминает преведущий тип(оператор/число) СТОИТ TRUE ТАК КАК ПЕРВЫЙ СИМВОЛ ВСЕГДА БАРЬЕР
-    private String _temp_number = ""; // Для записи в стек числа
 
     CalculatePolishNotation(TextView preResult, TextView result) {
         super(preResult, result);
@@ -16,59 +13,50 @@ public class CalculatePolishNotation extends HandlerGUI {
 
     /**
      * Метод добовляющий символ в общий стек и вызов вывода на экран
-     * @param operator - входящий символ
+     * @param inputData - входящий символ
      */
-    public void add(String operator) {
-        // Проверка на ввод одного оператора между цифрами =>
-        if (isInputMathOperator(operator) && isMathOperator) return;
-
-        if(isInputMathOperator(operator)) { // Если входящий символ являеться математическим оператором
-            addStackEquation(operator);
-            isMathOperator = true;
-            isComma = false;
-        } else { // Если входящий символ являеться цифрой/запятой/скобочкой
-            isMathOperator = false;
-            if(isBracket(operator)) { // Являеться ли он скобочкой
-                addStackEquation(operator);
-                isComma = false;
-            } else if(operator.equals(".")) { // Если запятая
-
-                if(_temp_number.equals(""))
-                    editAddNumberToStack("0.");
-                else
-                    if(!isComma)
-                        editAddNumberToStack(operator);
-                isComma = true;
-            } else { // если цифра
-                editAddNumberToStack(operator);
-            }
+    public void add(String inputData) {
+        if(stackEquation.isEmpty()) {
+            if(!isInputMathOperator(inputData) && !inputData.equals(".")) stackEquation.add(inputData);
+            else if(inputData.equals(".")) stackEquation.add("0.");
+        } else {
+            checkNumber(inputData);
         }
-        MyLog.d(stackEquation.toString());
+        //MyLog.d(stackEquation.toString());
         drawPreResult(stackEquation);
     }
 
     /**
-     * Добовляет математический оператор
-     * @param operator - математический оператор
+     * Проверка входящего символа
+     * @param number = входящий символ
      */
-    private void addStackEquation(String operator) {
-        stackEquation.add(operator);
-        _temp_number = "";
+    private void checkNumber(String number) {
+        String preNumber = stackEquation.get(stackEquation.size()-1);
+        if(isInputMathOperator(number) || isBracket(number)) stackEquation.add(number);
+        else if(number.equals(".")) {
+            if(isNumeric(preNumber)) { // Если последний символ в стеке являеться числом
+                if(!preNumber.contains(".")) { // Если последний элемент в стеке не имеет точку
+                    preNumber += number;
+                    stackEquation.set(stackEquation.size()-1, preNumber);
+                }
+            } else {
+                stackEquation.add("0.");
+            }
+        } else { // Если входящий аргумент число
+            if(isNumeric(preNumber)) { // Если последний символ в стеке число
+                preNumber += number;
+                stackEquation.set(stackEquation.size()-1, preNumber);
+            } else { // Если последний символ в стеке не число
+                stackEquation.add(number);
+            }
+        }
     }
 
     /**
-     * Добавить/отредактировать число
-     * @param number - число
+     * Метод проверяющий являеться ли аргумент числом
+     * @param str - входящий аргумент
      */
-    private void editAddNumberToStack(String number) {
-        if(_temp_number.equals("")) {
-            _temp_number += number;
-            stackEquation.add(_temp_number);
-        } else {
-            _temp_number += number;
-            stackEquation.set(stackEquation.size()-1, _temp_number);
-        }
-    }
+    private boolean isNumeric(String str) { return str.matches("((-|\\+)?[0-9]+(\\.+)?)+"); }
 
     /**
      * Метод определяющий являеться ли аргумент математическим оператором
