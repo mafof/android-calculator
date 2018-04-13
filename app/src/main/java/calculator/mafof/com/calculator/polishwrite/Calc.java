@@ -9,24 +9,27 @@ public class Calc extends StacksPriority {
     private ArrayList<String> stackResult; // Стек результата(стек калифорнии)
     private ArrayList<String> stackTehas;  // Стек техаса
     private ArrayList<String> stackEquation; // Входящий стек(стек примера)
-    @Deprecated
-    private int iteratorForStackEquation = 0;
 
     public void calculate(ArrayList<String> stackEquation) {
         stackTehas = new ArrayList<>();
         stackResult = new ArrayList<>();
-        stackTehas.add("BREAK");
-        stackEquation.add("BREAK");
-        calc(stackEquation);
+        this.stackEquation = stackEquation;
 
+        stackTehas.add("BREAK");
+        this.stackEquation.add("BREAK");
+
+        calc(this.stackEquation);
+
+        // Дебаг =>
+        /*
         StringBuilder _result = new StringBuilder();
         for(String ch : stackResult) _result.append(" " + ch);
         MyLog.d(_result.toString());
+        */
     }
 
     private void calc(ArrayList<String> stackEquation) {
-        this.stackEquation = stackEquation;
-        prioritet(stackEquation.get(iteratorForStackEquation));
+        prioritet(stackEquation.get(0));
     }
 
     private void prioritet(String element) {
@@ -35,7 +38,7 @@ public class Calc extends StacksPriority {
         if(isNumeric(element)){
             stackResult.add(element);
             next();
-        }else if(stackOneIn(element) && stackOneOut(stackElement)) {
+        } else if(stackOneIn(element) && stackOneOut(stackElement)) {
             action(2, element);
         } else if(stackTwoIn(element) && stackTwoOut(stackElement)) {
             action(1, element);
@@ -73,7 +76,7 @@ public class Calc extends StacksPriority {
                 break;
             case 2:
                 stackResult.add(stackTehas.remove(stackTehas.size()-1));
-                prioritet(stackEquation.get(iteratorForStackEquation));
+                prioritet(stackEquation.get(0));
                 break;
             case 3:
                 stackTehas.remove(stackTehas.size()-1);
@@ -88,8 +91,8 @@ public class Calc extends StacksPriority {
     }
 
     private void next() {
-        stackEquation.remove(iteratorForStackEquation);
-        prioritet(stackEquation.get(iteratorForStackEquation));
+        stackEquation.remove(0);
+        prioritet(stackEquation.get(0));
     }
 
     /**

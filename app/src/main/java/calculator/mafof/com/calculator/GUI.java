@@ -110,10 +110,11 @@ public class GUI extends Calc {
     }
 
     private void drawPreResult(ArrayList<String> stackEquation) {
+        MyLog.d("DRAW=> " + stackEquation.toString());
         preResultText = new StringBuilder();
         for(String el: stackEquation)
             preResultText.append(el);
         preResult.setText(preResultText);
-        if(stackEquation.size() > 1) calculate(stackEquation);
+        if(stackEquation.size() >= 1) calculate(stackEquation);
     }
 }
