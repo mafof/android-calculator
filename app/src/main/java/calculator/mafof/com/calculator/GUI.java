@@ -18,6 +18,8 @@ public class GUI extends Calc {
         this.result = result;
     }
 
+    public ArrayList<String> getStackEquation() { return stackEquation; }
+
     /**
      * Метод добовляющий символ в общий стек и вызов вывода на экран
      * @param inputData - входящий символ
@@ -110,7 +112,6 @@ public class GUI extends Calc {
     }
 
     private void drawPreResult(ArrayList<String> stackEquation) {
-        MyLog.d("DRAW=> " + stackEquation.toString());
         preResultText = new StringBuilder();
         for(String el: stackEquation)
             preResultText.append(el);

@@ -8,24 +8,23 @@ public class Calc extends StacksPriority {
 
     private ArrayList<String> stackResult; // Стек результата(стек калифорнии)
     private ArrayList<String> stackTehas;  // Стек техаса
-    private ArrayList<String> stackEquation; // Входящий стек(стек примера)
+    private ArrayList<String> stackExample; // Входящий стек(стек примера)
 
     public void calculate(ArrayList<String> stackEquation) {
         stackTehas = new ArrayList<>();
         stackResult = new ArrayList<>();
-        this.stackEquation = stackEquation;
+        this.stackExample = new ArrayList<>();
 
         stackTehas.add("BREAK");
-        this.stackEquation.add("BREAK");
+        this.stackExample.addAll(stackEquation);
+        this.stackExample.add("BREAK");
 
-        calc(this.stackEquation);
+        calc(this.stackExample);
 
         // Дебаг =>
-        /*
         StringBuilder _result = new StringBuilder();
         for(String ch : stackResult) _result.append(" " + ch);
         MyLog.d(_result.toString());
-        */
     }
 
     private void calc(ArrayList<String> stackEquation) {
@@ -76,7 +75,7 @@ public class Calc extends StacksPriority {
                 break;
             case 2:
                 stackResult.add(stackTehas.remove(stackTehas.size()-1));
-                prioritet(stackEquation.get(0));
+                prioritet(stackExample.get(0));
                 break;
             case 3:
                 stackTehas.remove(stackTehas.size()-1);
@@ -91,8 +90,8 @@ public class Calc extends StacksPriority {
     }
 
     private void next() {
-        stackEquation.remove(0);
-        prioritet(stackEquation.get(0));
+        stackExample.remove(0);
+        prioritet(stackExample.get(0));
     }
 
     /**

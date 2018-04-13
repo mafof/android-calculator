@@ -15,17 +15,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         calc = new GUI((TextView) findViewById(R.id.preResult), (TextView) findViewById(R.id.result));
-        ArrayList<String> test = new ArrayList<>();
-        //test.add("-1");
-        //test.add("+");
-        //test.add("1");
-        //test.add("*");
-        //test.add("(");
-        //test.add("1");
-        //test.add("+");
-        //test.add("1");
-        //test.add(")");
-        //calc.calculate(test);
     }
 
     public void onClick(View view) {
@@ -48,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.button_bracketLeft:  calc.add("("); break;
             case R.id.button_bracketRight: calc.add(")"); break;
             case R.id.button_plusMinus: MyLog.d("click button plusMinus"); break;
-            case R.id.button_result:    MyLog.d("click button result"); break;
+            case R.id.button_result:       calc.calculate(calc.getStackEquation()); break;
             case R.id.button_clear:        calc.clear(); break;
             case R.id.button_backspace:    calc.backspace(); break;
         }
