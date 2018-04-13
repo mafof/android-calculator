@@ -2,49 +2,99 @@ package calculator.mafof.com.calculator.polishwrite;
 
 import java.util.ArrayList;
 
+import calculator.mafof.com.calculator.MyLog;
+
 public class Calc extends StacksPriority {
 
-    private ArrayList<String> stackResult; // Стек результата
+    private ArrayList<String> stackResult; // Стек результата(стек калифорнии)
     private ArrayList<String> stackTehas;  // Стек техаса
-    private ArrayList<String> stackEquation;
+    private ArrayList<String> stackEquation; // Входящий стек(стек примера)
+    @Deprecated
     private int iteratorForStackEquation = 0;
 
-    protected void calculate(ArrayList<String> stackEquation) {
+    public void calculate(ArrayList<String> stackEquation) {
         stackTehas = new ArrayList<>();
         stackResult = new ArrayList<>();
-        this.stackEquation = stackEquation;
         stackTehas.add("BREAK");
+        stackEquation.add("BREAK");
+        calc(stackEquation);
+
+        StringBuilder _result = new StringBuilder();
+        for(String ch : stackResult) _result.append(" " + ch);
+        MyLog.d(_result.toString());
+    }
+
+    private void calc(ArrayList<String> stackEquation) {
+        this.stackEquation = stackEquation;
         prioritet(stackEquation.get(iteratorForStackEquation));
     }
 
     private void prioritet(String element) {
-        String stackElement = stackTehas.get(stackTehas.size()-1);
-        if(stackOneIn(element) && stackOneOut(stackElement)) {
-            action(2);
+        String stackElement = stackTehas.get(stackTehas.size() - 1);
+
+        if(isNumeric(element)){
+            stackResult.add(element);
+            next();
+        }else if(stackOneIn(element) && stackOneOut(stackElement)) {
+            action(2, element);
         } else if(stackTwoIn(element) && stackTwoOut(stackElement)) {
-            action(1);
+            action(1, element);
         } else if(stackThree(element) && stackThree(stackElement)) {
-            action(2);
+            action(2, element);
         } else if(stackFourIn(element) && stackFourOut(stackElement)) {
-            action(1);
+            action(1, element);
         } else if(stackFiveIn(element) && stackFiveOut(stackElement)) {
-            action(2);
+            action(2, element);
         } else if(stackSixIn(element) && stackSixOut(stackElement)) {
-            action(1);
+            action(1, element);
         } else if(stackSevenIn(element) && stackSevenOut(stackElement)) {
-            action(1);
+            action(1, element);
         } else if(element.equals("BREAK") && stackElement.equals("BREAK")) {
-            action(4);
+            action(4, element);
         } else if(element.equals(")") && stackElement.equals("BREAK")) {
-            action(5);
+            action(5, element);
         } else if(element.equals("BREAK") && stackElement.equals("(")) {
-            action(5);
+            action(5, element);
         } else if(element.equals(")") && stackElement.equals("(")) {
-            action(3);
+            action(3, element);
         }
     }
 
-    private void action(int type) {}
+    /**
+     * Метод в котором производиться вся логика действий
+     * @param type - тип действия
+     * @param element - входящий элемент(символ стрелки)
+     */
+    private void action(int type, String element) {
+        switch (type) {
+            case 1:
+                stackTehas.add(element);
+                next();
+                break;
+            case 2:
+                stackResult.add(stackTehas.remove(stackTehas.size()-1));
+                prioritet(stackEquation.get(iteratorForStackEquation));
+                break;
+            case 3:
+                stackTehas.remove(stackTehas.size()-1);
+                next();
+                break;
+            case 4:
+                break;
+            case 5:
+                MyLog.d(new Error("EXAMPLE NOT VALID").toString());
+                break;
+        }
+    }
 
-    private void next() {}
+    private void next() {
+        stackEquation.remove(iteratorForStackEquation);
+        prioritet(stackEquation.get(iteratorForStackEquation));
+    }
+
+    /**
+     * Метод проверяющий являеться ли аргумент числом
+     * @param str - входящий аргумент
+     */
+    protected boolean isNumeric(String str) { return str.matches("((-|\\+)?[0-9]+(\\.+)?)+"); }
 }

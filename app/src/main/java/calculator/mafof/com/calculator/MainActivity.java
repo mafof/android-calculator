@@ -2,9 +2,10 @@ package calculator.mafof.com.calculator;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private GUI calc;
@@ -14,6 +15,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         calc = new GUI((TextView) findViewById(R.id.preResult), (TextView) findViewById(R.id.result));
+        ArrayList<String> test = new ArrayList<>();
+        //test.add("-1");
+        //test.add("+");
+        //test.add("1");
+        //test.add("*");
+        //test.add("(");
+        //test.add("1");
+        //test.add("+");
+        //test.add("1");
+        //test.add(")");
+        //calc.calculate(test);
     }
 
     public void onClick(View view) {

@@ -82,12 +82,6 @@ public class GUI extends Calc {
     }
 
     /**
-     * Метод проверяющий являеться ли аргумент числом
-     * @param str - входящий аргумент
-     */
-    private boolean isNumeric(String str) { return str.matches("((-|\\+)?[0-9]+(\\.+)?)+"); }
-
-    /**
      * Метод определяющий являеться ли аргумент математическим оператором
      * @param operator - входящее значение
      */
@@ -120,6 +114,6 @@ public class GUI extends Calc {
         for(String el: stackEquation)
             preResultText.append(el);
         preResult.setText(preResultText);
-        calculate(stackEquation);
+        if(stackEquation.size() > 1) calculate(stackEquation);
     }
 }
