@@ -82,4 +82,16 @@ public class StacksPriority {
      * @param in - приходящие данные со стека `техас`
      */
     protected boolean stackSixOut(String in) { return in.equals("("); }
+
+    /**
+     * Метод проверяющий 7 блок
+     * @param in - приходящие данные со стека примера
+     */
+    protected boolean stackSevenIn(String in) { return in.equals("+") || in.equals("-"); }
+
+    /**
+     * Метод проверяющий 7 блок
+     * @param in - приходящие данные со стека `техас`
+     */
+    protected boolean stackSevenOut(String in) { return in.equals("BREAK"); }
 }
