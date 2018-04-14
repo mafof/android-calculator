@@ -38,6 +38,7 @@ public class GUI extends Calc {
      * Метод удаляющий в элементе 1 символ
      */
     public void backspace() {
+        if(stackEquation.isEmpty()) return;
         String _element = stackEquation.get(stackEquation.size()-1);
         MyLog.d(_element.length());
         if(_element.length() > 1) {
