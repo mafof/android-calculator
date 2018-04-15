@@ -1,8 +1,6 @@
 package calculator.mafof.com.calculator.polishwrite;
 
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
 
 import calculator.mafof.com.calculator.MyLog;
 
@@ -118,24 +116,6 @@ public class Calc extends StacksPriority {
                 }
             }
         }
-
-        /*
-        try {
-            while (stackResult.size() != 1) {
-                MyLog.d(stackResult.toString());
-                for (int i = 0; i < stackResult.size(); i++) {
-                    if (!isNumeric(stackResult.get(i))) {
-                        String res = calcResultOnInputArg(Double.valueOf(stackResult.get(i - 2)),
-                                Double.valueOf(stackResult.get(i - 1)), stackResult.get(i));
-                        stackResult.set(i, res);
-                        stackResult.remove(i - 1);
-                        stackResult.remove(i - 2);
-                    }
-                }
-            }
-            MyLog.d("Result => " + stackResult.toString());
-        } catch (ConcurrentModificationException | ArrayIndexOutOfBoundsException e) { MyLog.d(new Error(e).toString()); }
-        */
     }
 
     /**
@@ -150,11 +130,6 @@ public class Calc extends StacksPriority {
             case "/": return String.valueOf(num1 / num2);
         }
         return null;
-    }
-
-    @Deprecated
-    private void drawResult(String text) {
-        MyLog.d("Result=> " + text);
     }
 
     /**

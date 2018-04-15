@@ -12,8 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="70pt"
         android:gravity="center|right"
-        android:textSize="50sp"
-        android:text="" />
+        android:textSize="50sp" />
 
     <!--HorizontalScrollView>
         android:layout_width="match_parent"

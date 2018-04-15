@@ -65,7 +65,7 @@ public class GUI extends Calc {
     private void checkNumber(String number) {
         String preNumber = stackEquation.get(stackEquation.size()-1);
         if(isInputMathOperator(number) || isBracket(number)) {
-            if(isBracket(number)) checkSymbolOnBracket(preNumber);
+            if(isBracket(number) && !number.equals(")")) checkSymbolOnBracket(preNumber);
 
             if(!isInputMathOperator(preNumber)) {
                 if(number.equals("(") && !isBracket(preNumber)) {
