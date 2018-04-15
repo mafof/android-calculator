@@ -56,6 +56,7 @@ public class GUI extends Calc {
     public void clear() {
         stackEquation.clear();
         drawPreResult(stackEquation);
+        draw(null);
     }
 
     /**
@@ -135,6 +136,11 @@ public class GUI extends Calc {
         for(String el: stackEquation)
             preResultText.append(el);
         preResult.setText(preResultText);
-        if(stackEquation.size() >= 1) calculate(stackEquation);
+        if(stackEquation.size() >= 1) draw(calculate(stackEquation));
+    }
+
+    private void draw(String inData) {
+        if(inData != null) result.setText(inData);
+        else result.setText("");
     }
 }

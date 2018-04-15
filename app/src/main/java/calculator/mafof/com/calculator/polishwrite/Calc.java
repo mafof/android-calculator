@@ -10,7 +10,7 @@ public class Calc extends StacksPriority {
     private ArrayList<String> stackTehas;  // Стек техаса
     private ArrayList<String> stackExample; // Входящий стек(стек примера)
 
-    public void calculate(ArrayList<String> stackEquation) {
+    public String calculate(ArrayList<String> stackEquation) {
         stackTehas = new ArrayList<>();
         stackResult = new ArrayList<>();
         stackExample = new ArrayList<>();
@@ -20,18 +20,15 @@ public class Calc extends StacksPriority {
         stackExample.add("BREAK");
 
         calc(stackExample);
-
-        // Дебаг =>
-        StringBuilder _result = new StringBuilder();
-        for(String ch : stackResult) _result.append(" " + ch);
-        MyLog.d(_result.toString());
+        if(!stackResult.isEmpty()) return stackResult.get(0);
+        else return null;
     }
 
     private void calc(ArrayList<String> stackEquation) {
-        prioritet(stackEquation.get(0));
+        stackResult = prioritet(stackEquation.get(0));
     }
 
-    private void prioritet(String element) {
+    private ArrayList<String> prioritet(String element) {
         String stackElement = stackTehas.get(stackTehas.size() - 1);
 
         if(isNumeric(element)){
@@ -60,6 +57,7 @@ public class Calc extends StacksPriority {
         } else if(element.equals(")") && stackElement.equals("(")) {
             action(3, element);
         }
+        return stackResult;
     }
 
     /**
@@ -82,12 +80,9 @@ public class Calc extends StacksPriority {
                 next();
                 break;
             case 4:
-                MyLog.d("BEFORE=> " + stackResult.toString());
                 result();
                 break;
-            case 5:
-                MyLog.d(new Error("EXAMPLE NOT VALID").toString());
-                break;
+            case 5: return;
         }
     }
 
@@ -98,7 +93,6 @@ public class Calc extends StacksPriority {
 
     private void result() {
         if(!stackResult.isEmpty() && stackResult.size() <= 2) {
-            MyLog.d("Result => " + stackResult.get(0));
             return;
         }
 
@@ -111,7 +105,6 @@ public class Calc extends StacksPriority {
                     stackResult.set(i, res);
                     stackResult.remove(i - 1);
                     stackResult.remove(i - 2);
-                    MyLog.d("AFTER=> " + stackResult.toString());
                     break;
                 }
             }
