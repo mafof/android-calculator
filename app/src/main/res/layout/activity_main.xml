@@ -14,21 +14,6 @@
         android:gravity="center|right"
         android:textSize="50sp" />
 
-    <!--HorizontalScrollView>
-        android:layout_width="match_parent"
-        android:layout_height="20pt"
-        android:scrollbars="none">
-            <TextView
-                android:id="@+id/preResult"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center|right"
-                android:maxHeight="20pt"
-                android:singleLine="true"
-                android:text=""
-                android:textSize="20sp"/>
-    </HorizontalScrollView-->
-
     <TextView
         android:id="@+id/preResult"
         android:layout_width="match_parent"

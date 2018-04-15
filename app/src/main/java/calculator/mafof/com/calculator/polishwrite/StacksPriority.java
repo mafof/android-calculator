@@ -1,6 +1,6 @@
 package calculator.mafof.com.calculator.polishwrite;
 
-public class StacksPriority {
+class StacksPriority {
     /**
      * Метод проверяющий 1 блок
      * @param in - приходящие данные со стека примера

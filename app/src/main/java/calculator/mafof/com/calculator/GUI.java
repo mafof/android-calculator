@@ -59,6 +59,17 @@ public class GUI extends Calc {
         draw(null);
     }
 
+    public void setPlusMinus() {
+        String operator = stackEquation.get(stackEquation.size()-1);
+        if(isNumeric(operator)) {
+            if(operator.contains("-"))
+                stackEquation.set(stackEquation.size()-1, operator.substring(1, operator.length()));
+            else
+                stackEquation.set(stackEquation.size()-1, "-"+operator);
+            drawPreResult(stackEquation);
+        }
+    }
+
     /**
      * Проверка входящего символа
      * @param number = входящий символ
@@ -68,13 +79,17 @@ public class GUI extends Calc {
         if(isInputMathOperator(number) || isBracket(number)) {
             if(isBracket(number) && !number.equals(")")) checkSymbolOnBracket(preNumber);
 
+            //if(isBracket(number)) stackEquation.add(number);
+
             if(!isInputMathOperator(preNumber)) {
-                if(number.equals("(") && !isBracket(preNumber)) {
+                if (number.equals("(") && !isBracket(preNumber)) {
                     stackEquation.add("*");
                     stackEquation.add(number);
                 } else {
                     stackEquation.add(number);
                 }
+            } else if(isInputMathOperator(preNumber) && isBracket(number)) {
+                stackEquation.add(number);
             }
         } else if(number.equals(".")) {
             checkSymbolOnBracket(preNumber);

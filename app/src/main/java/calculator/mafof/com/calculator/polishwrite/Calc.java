@@ -82,7 +82,10 @@ public class Calc extends StacksPriority {
             case 4:
                 result();
                 break;
-            case 5: return;
+            case 5:
+                stackResult = new ArrayList<>();
+                stackResult.add("");
+                break;
         }
     }
 
