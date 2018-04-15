@@ -1,6 +1,8 @@
 package calculator.mafof.com.calculator.polishwrite;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
 
 import calculator.mafof.com.calculator.MyLog;
 
@@ -13,13 +15,13 @@ public class Calc extends StacksPriority {
     public void calculate(ArrayList<String> stackEquation) {
         stackTehas = new ArrayList<>();
         stackResult = new ArrayList<>();
-        this.stackExample = new ArrayList<>();
+        stackExample = new ArrayList<>();
 
         stackTehas.add("BREAK");
-        this.stackExample.addAll(stackEquation);
-        this.stackExample.add("BREAK");
+        stackExample.addAll(stackEquation);
+        stackExample.add("BREAK");
 
-        calc(this.stackExample);
+        calc(stackExample);
 
         // Дебаг =>
         StringBuilder _result = new StringBuilder();
@@ -82,6 +84,8 @@ public class Calc extends StacksPriority {
                 next();
                 break;
             case 4:
+                MyLog.d("BEFORE=> " + stackResult.toString());
+                result();
                 break;
             case 5:
                 MyLog.d(new Error("EXAMPLE NOT VALID").toString());
@@ -92,6 +96,65 @@ public class Calc extends StacksPriority {
     private void next() {
         stackExample.remove(0);
         prioritet(stackExample.get(0));
+    }
+
+    private void result() {
+        if(!stackResult.isEmpty() && stackResult.size() <= 2) {
+            MyLog.d("Result => " + stackResult.get(0));
+            return;
+        }
+
+        while(stackResult.size() >= 3) {
+            for (int i = 0; i < stackResult.size(); i++) {
+                if (!isNumeric(stackResult.get(i))) {
+                    MyLog.d(i + " " + stackResult.get(i));
+                    String res = calcResultOnInputArg(Double.valueOf(stackResult.get(i - 2)),
+                            Double.valueOf(stackResult.get(i - 1)), stackResult.get(i));
+                    stackResult.set(i, res);
+                    stackResult.remove(i - 1);
+                    stackResult.remove(i - 2);
+                    MyLog.d("AFTER=> " + stackResult.toString());
+                    break;
+                }
+            }
+        }
+
+        /*
+        try {
+            while (stackResult.size() != 1) {
+                MyLog.d(stackResult.toString());
+                for (int i = 0; i < stackResult.size(); i++) {
+                    if (!isNumeric(stackResult.get(i))) {
+                        String res = calcResultOnInputArg(Double.valueOf(stackResult.get(i - 2)),
+                                Double.valueOf(stackResult.get(i - 1)), stackResult.get(i));
+                        stackResult.set(i, res);
+                        stackResult.remove(i - 1);
+                        stackResult.remove(i - 2);
+                    }
+                }
+            }
+            MyLog.d("Result => " + stackResult.toString());
+        } catch (ConcurrentModificationException | ArrayIndexOutOfBoundsException e) { MyLog.d(new Error(e).toString()); }
+        */
+    }
+
+    /**
+     * Для метода result
+     * @return - возвращает результат обрабатывая входной параметр
+     */
+    private String calcResultOnInputArg(double num1, double num2, String operation) {
+        switch (operation) {
+            case "+": return String.valueOf(num1 + num2);
+            case "-": return String.valueOf(num1 - num2);
+            case "*": return String.valueOf(num1 * num2);
+            case "/": return String.valueOf(num1 / num2);
+        }
+        return null;
+    }
+
+    @Deprecated
+    private void drawResult(String text) {
+        MyLog.d("Result=> " + text);
     }
 
     /**

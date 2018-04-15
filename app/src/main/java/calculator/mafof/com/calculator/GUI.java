@@ -64,8 +64,19 @@ public class GUI extends Calc {
      */
     private void checkNumber(String number) {
         String preNumber = stackEquation.get(stackEquation.size()-1);
-        if(isInputMathOperator(number) || isBracket(number)) stackEquation.add(number);
-        else if(number.equals(".")) {
+        if(isInputMathOperator(number) || isBracket(number)) {
+            if(isBracket(number)) checkSymbolOnBracket(preNumber);
+
+            if(!isInputMathOperator(preNumber)) {
+                if(number.equals("(") && !isBracket(preNumber)) {
+                    stackEquation.add("*");
+                    stackEquation.add(number);
+                } else {
+                    stackEquation.add(number);
+                }
+            }
+        } else if(number.equals(".")) {
+            checkSymbolOnBracket(preNumber);
             if(isNumeric(preNumber)) { // Если последний символ в стеке являеться числом
                 if(!preNumber.contains(".")) { // Если последний элемент в стеке не имеет точку
                     preNumber += number;
@@ -75,6 +86,7 @@ public class GUI extends Calc {
                 stackEquation.add("0.");
             }
         } else { // Если входящий аргумент число
+            checkSymbolOnBracket(preNumber);
             if(isNumeric(preNumber)) { // Если последний символ в стеке число
                 preNumber += number;
                 stackEquation.set(stackEquation.size()-1, preNumber);
@@ -110,6 +122,12 @@ public class GUI extends Calc {
                 return true;
         }
         return false;
+    }
+
+    private void checkSymbolOnBracket(String preNumber) {
+        if(preNumber.equals(")")) {
+            stackEquation.add("*");
+        }
     }
 
     private void drawPreResult(ArrayList<String> stackEquation) {
